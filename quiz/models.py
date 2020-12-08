@@ -1,3 +1,77 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+from django.urls import reverse
 
-# Create your models here.
+class Quiz(models.Model):
+    '''
+    Database model for quiz
+    '''
+    name = models.CharField(max_length=80)
+    description = models.TextField()
+    created = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(
+                               get_user_model(),
+                               on_delete=models.CASCADE,
+            )
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        ordering = ['-created']
+
+
+class Question(models.Model):
+    '''
+    Database Table for question
+    '''
+    TYPE_CHOICES = (
+            ('MC', 'Multiple Choice'),
+            ('TF', 'True False'),
+            ('M', 'Matching'),
+            ('D', 'Dropdown'),
+            )
+    question = models.CharField(max_length=254)
+    question_type = models.CharField(max_length=10,
+                                     choices=TYPE_CHOICES)
+
+    quiz = models.ForeignKey(Quiz,
+                             on_delete=models.CASCADE,
+                             related_name='questions')
+
+    answer = models.CharField(max_length=254)
+
+    def __str__(self):
+        return self.question
+    
+ 
+class UserAnswer(models.Model):
+    user = models.ForeignKey(get_user_model(),
+                             on_delete=models.CASCADE,
+                             related_name='user'
+                             )
+    quiz = models.ForeignKey(Quiz,
+                             on_delete=models.CASCADE)
+
+    answer = models.CharField(max_length=255)
+    question = models.ForeignKey(Question,
+                                 on_delete=models.CASCADE
+                                 )
+
+    def __str__(self):
+        return self.answer
+
+
+class SaveUserInstance(models.Model):
+    user = models.ForeignKey(get_user_model(),
+                             on_delete=models.CASCADE
+                             )
+    quiz = models.ForeignKey(Quiz,
+                             on_delete=models.CASCADE)
+    attempt = models.IntegerField(default=0)
+    
+    UserAnswer = models.ManyToManyField(UserAnswer,
+                                        related_name='answers')
+
+    def __str__(self):
+        return self.user.email

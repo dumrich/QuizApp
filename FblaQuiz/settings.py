@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # custom apps
     'users.apps.UsersConfig',
+    'quiz.apps.QuizConfig',
     'django.contrib.postgres',
 ]
 

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz List{% endblock %}
+
+{% block content %}
+	<h1>
+		Quiz List
+	</h1>
+	{% for quiz in quizzes %}
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">{{ quiz.name  }}</th>
+					<th scope="col">{{ quiz.description|truncatewords:15|linebreaks }}</th>
+					<th scope="col">{{ quiz.author.email }}</th>
+				</tr>
+			</tbody>
+		</table>
+	{% endfor %}
+{% endblock %}
