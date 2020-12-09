@@ -3,6 +3,9 @@
 {% block title %}Quiz List{% endblock %}
 
 {% block content %}
+	{% if user.is_authenticated %}
+		<h2>Hey {{user.email}}!</h2>
+	{% endif %}
 	<h1>
 		Quiz List
 	</h1>
