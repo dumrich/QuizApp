@@ -11,7 +11,11 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th scope="col">{{ quiz.name  }}</th>
+						<th scope="col">
+							<a href="{{quiz.get_absolute_url}}">
+								{{ quiz.name  }}
+							</a>
+						</th>
 						<th scope="col">{{ quiz.description|truncatewords:15|linebreaks }}</th>
 						<th scope="col">{{ quiz.author.email }}</th>
 					</tr>

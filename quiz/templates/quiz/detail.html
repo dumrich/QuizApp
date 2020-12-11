@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz View{% endblock %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<div class="jumbotron">
+			<h1 class="display-3">{{quiz.name}}</h1>
+			<p class="lead">{{quiz.description}}</p>
+			<hr class="my-4">
+			<p>Created by {{quiz.author}}</p>
+			<p class="lead">
+				<a class="btn btn-primary btn-lg" href="#" role="button">start</a>
+			</p>
+		</div>	
+	{% else %}
+		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
+	{% endif %}
+
+
+{% endblock %}

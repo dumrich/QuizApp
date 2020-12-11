@@ -8,6 +8,7 @@ class Quiz(models.Model):
     Database model for quiz
     '''
     name = models.CharField(max_length=80)
+    slug = models.SlugField(unique=True, null=True)
     description = models.TextField()
     created = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(
@@ -15,11 +16,20 @@ class Quiz(models.Model):
                                on_delete=models.CASCADE,
             )
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Quiz, self).save(*args, **kwargs)
+  
     def __str__(self):
         return f'{self.name}'
 
     class Meta:
         ordering = ['-created']
+
+    def get_absolute_url(self):
+        return reverse('quiz:quiz_detail',
+                       args=[self.id,
+                             self.slug])
 
 
 class Question(models.Model):

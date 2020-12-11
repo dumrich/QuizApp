@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from .models import Quiz
+from .forms import QuizForm
 
 
 class QuizListView(ListView):
@@ -8,11 +9,16 @@ class QuizListView(ListView):
     context_object_name = 'quizzes'
     template_name = 'quiz/list.html'
 
-def quiz_detail(request, pk):
-    print(request)
-    quiz = get_object_or_404(Quiz, pk=pk)
+def quiz_detail(request, pk, slug):
+    quiz = get_object_or_404(Quiz, pk=pk, slug=slug)
     
     return render(request, 
-                  'blog/post/detail.html',
+                  'quiz/detail.html',
                   {'quiz':quiz})
+
+#def quiz_create(request):
+#    if request.method == 'POST':
+#        QuizForm = QuizForm(data=request.POST)
+#        if QuizForm.is_valid():
+#            new_quiz = QuizForm.save()
 

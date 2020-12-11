@@ -6,10 +6,11 @@ from .models import Quiz, Question, UserAnswer, SaveUserInstance
 class QuizAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'author', 'created',)
     list_filter = ('created',)
+    prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'description', 'author', 'created',)
     raw_id_fields = ('author',)
     ordering = ('created',)
-    fields = ('name', 'description', 'author')
+    fields = ('name', 'description', 'author', 'slug')
 
 
 @admin.register(Question)
