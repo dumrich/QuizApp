@@ -8,7 +8,7 @@ class Quiz(models.Model):
     Database model for quiz
     '''
     name = models.CharField(max_length=80)
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(null=True)
     description = models.TextField()
     created = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(
@@ -51,7 +51,10 @@ class Question(models.Model):
                              related_name='questions')
 
     answer = models.CharField(max_length=254)
-
+    choice_2 = models.CharField(max_length=250, null=True)
+    choice_3 = models.CharField(max_length=254, null=True)
+    choice_4 = models.CharField(max_length=255, null=True)
+    
     def __str__(self):
         return self.question
     

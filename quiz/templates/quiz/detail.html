@@ -13,6 +13,25 @@
 				<a class="btn btn-primary btn-lg" href="#" role="button">start</a>
 			</p>
 		</div>	
+
+		{% for question in questions %}
+			<ul class="list-group">
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					{{ question.question }}
+				</li>
+			</ul>
+		{% endfor %}
+
+		{% if new_question %}
+			<h2> Your Question has been added</h2>
+		{% else %}
+			<h2>Add New Question</h2>
+			<form method="post">
+				{{ question_form.as_p }}
+				{% csrf_token %}
+				<p><input type="submit" value="Add question"></p>
+			</form>
+		{% endif %}
 	{% else %}
 		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
 	{% endif %}

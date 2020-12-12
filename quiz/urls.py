@@ -8,6 +8,10 @@ urlpatterns = [
     path('', views.QuizListView.as_view(), name='quiz_list'),
     path('<int:pk>/<slug:slug>/',
          views.quiz_detail,
-         name='quiz_detail')
+         name='quiz_detail'),
+    path('quiz/create/',
+         views.quiz_create,
+         name='quiz_create')
+
  
 ]

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Create{% endblock %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<h1>
+			Quiz Create
+		</h1>
+		<form method="post">
+			{{ quiz_form.as_p }}
+			{% csrf_token %}
+			<p><input type="submit" value="Add Quiz" onclick="{% url 'quiz:quiz_list' %}"></p>
+		</form>
+	{% else %}
+		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
+	{% endif %}
+
+
+{% endblock %}
