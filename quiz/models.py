@@ -39,7 +39,7 @@ class Question(models.Model):
     TYPE_CHOICES = (
             ('MC', 'Multiple Choice'),
             ('TF', 'True False'),
-            ('M', 'Matching'),
+            ('FOTB', 'Fill in the Blank'),
             ('D', 'Dropdown'),
             )
     question = models.CharField(max_length=254)

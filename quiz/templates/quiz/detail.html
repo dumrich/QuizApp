@@ -10,7 +10,7 @@
 			<hr class="my-4">
 			<p>Created by {{quiz.author}}</p>
 			<p class="lead">
-				<a class="btn btn-primary btn-lg" href="#" role="button">start</a>
+			<a class="btn btn-primary btn-lg" href="{% url 'quiz:quiz_take' pk=quiz.id slug=quiz.slug %}" role="button">start</a>
 			</p>
 		</div>	
 

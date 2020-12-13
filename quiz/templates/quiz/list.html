@@ -4,24 +4,25 @@
 
 {% block content %}
 	{% if user.is_authenticated %}
-		<h1>
+		<div class="container pt-4">
+				<h1>
 			Quiz List
 		</h1>
-		{% for quiz in quizzes %}
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="col">
-							<a href="{{quiz.get_absolute_url}}">
-								{{ quiz.name  }}
-							</a>
-						</th>
-						<th scope="col">{{ quiz.description|truncatewords:15|linebreaks }}</th>
-						<th scope="col">{{ quiz.author.email }}</th>
-					</tr>
-				</tbody>
-			</table>
-		{% endfor %}
+
+			{% for quiz in quizzes %}
+	
+				<div class="card border-secondary mb-3" style="max-width: 20rem;">
+					<div class="card-header">By {{quiz.author.email}}</div>
+			<div class="card-body">
+				<h4 class="card-title"><a href="{{quiz.get_absolute_url}}">
+									{{ quiz.name  }}
+								</a>
+
+			<p class="card-text">{{quiz.description}}</p>
+			</div>
+		</div>
+			{% endfor %}
+		</div>
 	{% else %}
 		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
 	{% endif %}

@@ -9,6 +9,19 @@ class QuizListView(ListView):
     context_object_name = 'quizzes'
     template_name = 'quiz/list.html'
 
+def quiz_take(request, pk, slug):
+    quiz = get_object_or_404(Quiz, slug=slug, pk=pk)
+    
+    questions = quiz.questions.all()
+
+    
+    return render(request, 
+                  'quiz/quiz.html',
+                  {'quiz':quiz,
+                   'questions': questions
+                  })
+
+
 def quiz_detail(request, pk, slug):
     quiz = get_object_or_404(Quiz, pk=pk, slug=slug)
     
@@ -20,6 +33,9 @@ def quiz_detail(request, pk, slug):
         question_form = QuestionForm(data=request.POST)
         if question_form.is_valid():
             new_question = question_form.save(commit=False)
+            if new_question.question_type=='TF':
+                new_question.choice_3 = None
+                new_question.choice_4 = None
             new_question.quiz = quiz
             new_question.save()
     else:
@@ -47,3 +63,5 @@ def quiz_create(request):
                   'quiz/create.html',
                   {'quiz_form':quiz_form,
                    'new_quiz':new_quiz})
+
+

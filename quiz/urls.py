@@ -11,7 +11,11 @@ urlpatterns = [
          name='quiz_detail'),
     path('quiz/create/',
          views.quiz_create,
-         name='quiz_create')
+         name='quiz_create'),
+    path('<int:pk>/<slug:slug>/quiz/',
+         views.quiz_take,
+         name='quiz_take'),
 
+ 
  
 ]
