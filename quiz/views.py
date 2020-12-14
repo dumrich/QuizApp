@@ -2,19 +2,23 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from .models import Quiz
 from .forms import QuizForm, QuestionForm
-
+import random
 
 class QuizListView(ListView):
     queryset = Quiz.objects.all()
     context_object_name = 'quizzes'
     template_name = 'quiz/list.html'
 
+
 def quiz_take(request, pk, slug):
     quiz = get_object_or_404(Quiz, slug=slug, pk=pk)
     
-    questions = quiz.questions.all()
-
+    questions = quiz.questions.all()[1:5]
     
+
+    if request.method == 'POST':
+        questions= list(dict(request.POST).items())[:-1]
+        print(questions)
     return render(request, 
                   'quiz/quiz.html',
                   {'quiz':quiz,
