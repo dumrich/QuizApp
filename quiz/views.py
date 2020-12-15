@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
-from .models import Quiz
+from .models import Quiz, SaveUserInstance, UserAnswer
 from .forms import QuizForm, QuestionForm
-import random
+from random import shuffle
+
 
 class QuizListView(ListView):
     queryset = Quiz.objects.all()
@@ -13,12 +14,26 @@ class QuizListView(ListView):
 def quiz_take(request, pk, slug):
     quiz = get_object_or_404(Quiz, slug=slug, pk=pk)
     
-    questions = quiz.questions.all()[1:5]
+    questions = list(quiz.questions.all())
     
 
     if request.method == 'POST':
         questions= list(dict(request.POST).items())[:-1]
-        print(questions)
+        answers = []
+        for question in questions:
+             stripped_question = question[0].split('/')[0]
+             answer = UserAnswer.objects.create(user=request.user, quiz=quiz, question=quiz.questions.get(question=stripped_question),
+                     answer=question[1][0])
+             answers.append(answer)
+        print(answers)
+        if SaveUserInstance.objects.filter(user=request.user, quiz=quiz):
+            attempts = list(SaveUserInstance.objects.filter(user=request.user, quiz=quiz))[-1].attempt + 1
+        else:
+            attempts = 1
+        UserInstance = SaveUserInstance.objects.create(user=request.user, quiz=quiz, attempt=attempts)
+        UserInstance = UserInstance.UserAnswer.add(*answers)
+        print(UserInstance)
+        
     return render(request, 
                   'quiz/quiz.html',
                   {'quiz':quiz,

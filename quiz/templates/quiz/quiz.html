@@ -63,7 +63,11 @@
 						</div>
 
 					</fieldset>
-
+				{% elif question.question_type == "T"%}
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter Answer" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
+					</div>
+						
 				{% endif %}
 			{% endfor %}
 			{% csrf_token %}
