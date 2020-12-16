@@ -15,6 +15,9 @@ urlpatterns = [
     path('<int:pk>/<slug:slug>/quiz/',
          views.quiz_take,
          name='quiz_take'),
+    path('<int:pk>/<slug:slug>/<int:attempt>/',
+         views.instance_detail,
+         name="instance_detail")
 
  
  

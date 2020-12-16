@@ -30,9 +30,17 @@ def quiz_take(request, pk, slug):
             attempts = list(SaveUserInstance.objects.filter(user=request.user, quiz=quiz))[-1].attempt + 1
         else:
             attempts = 1
-        UserInstance = SaveUserInstance.objects.create(user=request.user, quiz=quiz, attempt=attempts)
+        score = 0
+
+        for thing in answers:
+            if thing.question.answer == thing.answer:
+                score = score + 1
+            else:
+                continue       
+        print(score)
+        UserInstance = SaveUserInstance.objects.create(user=request.user, quiz=quiz, attempt=attempts, score=score)
         UserInstance = UserInstance.UserAnswer.add(*answers)
-        print(UserInstance)
+        print(SaveUserInstance.objects.get(user = request.user, quiz=quiz, attempt=attempts, score = score))
         
     return render(request, 
                   'quiz/quiz.html',
@@ -67,6 +75,16 @@ def quiz_detail(request, pk, slug):
                    'new_question': new_question,
                    'question_form': question_form})
 
+def instance_detail(request, pk, slug, attempt):
+    quiz = get_object_or_404(Quiz, pk=pk, slug=slug)
+    quiz_instance = get_object_or_404(SaveUserInstance, quiz=quiz, user=request.user, attempt=attempt)
+    total_questions = len(quiz_instance.UserAnswer.all())
+    return render(request,
+                  'quiz/instance.html',
+                  {'quiz_instance': quiz_instance,
+                   'total_questions':total_questions})
+
+    
 def quiz_create(request):
     new_quiz = None
     if request.method == 'POST':

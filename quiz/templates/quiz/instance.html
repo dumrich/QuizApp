@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Instance{% endblock %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+	<div class="container p-4">
+		<h1>{{quiz_instance.quiz}} for {{quiz_instance.user}}</h2>
+	</div>
+	<div class="container p-4">
+		<p>score:{{quiz_instance.score}}/{{total_questions}}</p>	
+	</div>
+	{% else %}
+		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
+	{% endif %}
+
+
+{% endblock %}

@@ -86,6 +86,15 @@ class SaveUserInstance(models.Model):
     
     UserAnswer = models.ManyToManyField(UserAnswer,
                                         related_name='answers')
+    score = models.PositiveIntegerField(null=True, blank=True)   
+
+ 
 
     def __str__(self):
         return self.user.email
+
+    def get_absolute_url(self):
+        return reverse('quiz:insatnce_detail',
+                       args=[self.quiz.id,
+                             self.quiz.slug,
+                             self.attempt])

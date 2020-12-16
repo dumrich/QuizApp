@@ -25,7 +25,7 @@ admin.site.register(UserAnswer)
 
 @admin.register(SaveUserInstance)
 class SaveUserInstanceAdmin(admin.ModelAdmin):
-    list_display = ('user', 'quiz', 'attempt',)
-    list_filter = ('user', 'quiz',)
-    fields = ('user', 'quiz', 'UserAnswer',)
+    list_display = ('user', 'quiz', 'attempt', 'score')
+    list_filter = ('user', 'quiz', 'score')
+    fields = ('user', 'quiz', 'UserAnswer', 'score')
 
