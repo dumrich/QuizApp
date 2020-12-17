@@ -17,7 +17,10 @@ urlpatterns = [
          name='quiz_take'),
     path('<int:pk>/<slug:slug>/<int:attempt>/',
          views.instance_detail,
-         name="instance_detail")
+         name="instance_detail"),
+    path('<int:pk>/pdf/',
+         views.quiz_pdf,
+         name='quiz_pdf')
 
  
  

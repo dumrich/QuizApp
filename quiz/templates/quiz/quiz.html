@@ -14,13 +14,13 @@
 					<fieldset class="form-group">
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="True" >
+								<input type="radio" required="required" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="True" >
 								True
 							</label>
 						</div>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="False">
+								<input type="radio" required="required" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="False">
 								False
 							</label>
 						</div>
@@ -28,7 +28,7 @@
 				{% elif question.question_type == "D"%}
 					<div class="form-group">
 						<label for="{{question}}{{forloop.counter}}"></label>
-						<select class="form-control" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
+						<select class="form-control" required="required" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
 							<option value="{{question.choice_2}}">{{question.choice_2}}</option>
 							<option value="{{question.answer}}">{{question.answer}}</option>
 							<option value="{{question.choice_3}}">{{question.choice_3}}</option>
@@ -39,25 +39,25 @@
 						<fieldset class="form-group">
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.answer}}" >
+								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.answer}}" >
 								{{question.answer}}
 							</label>
 						</div>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_2}}">
+								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_2}}">
 									{{question.choice_2}}	
 							</label>
 						</div>
 							<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_3}}">
+								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_3}}">
 									{{question.choice_3}}	
 							</label>
 						</div>
 							<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_3}}">
+								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_3}}">
 									{{question.choice_3}}	
 							</label>
 						</div>
@@ -65,7 +65,7 @@
 					</fieldset>
 				{% elif question.question_type == "T"%}
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Enter Answer" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
+						<input required="required" type="text" class="form-control" placeholder="Enter Answer" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
 					</div>
 						
 				{% endif %}

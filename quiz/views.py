@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 from .models import Quiz, SaveUserInstance, UserAnswer
 from .forms import QuizForm, QuestionForm
@@ -40,7 +40,8 @@ def quiz_take(request, pk, slug):
         print(score)
         UserInstance = SaveUserInstance.objects.create(user=request.user, quiz=quiz, attempt=attempts, score=score)
         UserInstance = UserInstance.UserAnswer.add(*answers)
-        print(SaveUserInstance.objects.get(user = request.user, quiz=quiz, attempt=attempts, score = score))
+        UserInstance = SaveUserInstance.objects.get(user = request.user, quiz=quiz, attempt=attempts, score = score)
+        return redirect(f'http://127.0.0.1:8000/{quiz.id}/{quiz.slug}/{UserInstance.attempt}')
         
     return render(request, 
                   'quiz/quiz.html',
@@ -84,7 +85,6 @@ def instance_detail(request, pk, slug, attempt):
                   {'quiz_instance': quiz_instance,
                    'total_questions':total_questions})
 
-    
 def quiz_create(request):
     new_quiz = None
     if request.method == 'POST':

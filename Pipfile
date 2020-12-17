@@ -8,6 +8,8 @@ django = "*"
 pynvim = "*"
 psycopg2 = "*"
 weasyprint = "*"
+reportlab = "*"
+xhtml2pdf = "*"
 
 [dev-packages]
 
