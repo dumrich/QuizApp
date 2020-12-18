@@ -60,6 +60,9 @@ class Question(models.Model):
     
  
 class UserAnswer(models.Model):
+    '''
+    Database table for User Answer
+    '''
     user = models.ForeignKey(get_user_model(),
                              on_delete=models.CASCADE,
                              related_name='user'
@@ -77,6 +80,9 @@ class UserAnswer(models.Model):
 
 
 class SaveUserInstance(models.Model):
+    '''
+    Database table for User Instance
+    '''
     user = models.ForeignKey(get_user_model(),
                              on_delete=models.CASCADE
                              )

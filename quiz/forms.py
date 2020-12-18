@@ -1,7 +1,11 @@
 from django import forms
 from .models import Quiz, Question
 
+
 class QuizForm(forms.ModelForm):
+    '''
+    Forms for creating a quiz
+    '''
     name = forms.CharField(widget=forms.TextInput(
         attrs = {
             'class': 'form-control',
@@ -23,6 +27,9 @@ class QuizForm(forms.ModelForm):
         fields = ('name', 'description')
 
 class QuestionForm(forms.ModelForm):
+    '''
+    Forms for creating a question
+    '''
     class Meta:
         model=Question
         exclude = ['quiz']
