@@ -28,7 +28,7 @@
 		{% endif %}
 		<p>Question: {{UserAnswer.question}}</p>
 		<p>Your Answer: {{UserAnswer.answer}}</p>
-		<p>Answer: {{UserAnswer.answer}}</p>
+		<p>Answer: {{UserAnswer.question.answer}}</p>
 		<hr width="100%">
 	{% endfor %}
 	<a href="{% url 'quiz:pdf-view' quiz_instance.pk %}"><button type="button" class="btn btn-primary">View PDF</button>

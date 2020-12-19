@@ -52,7 +52,7 @@ def quiz_take(request, pk, slug):
 
     shuffle(questions)
     print(questions)
-    questions = questions[:4]
+    questions = questions[:5]
     
     
 
