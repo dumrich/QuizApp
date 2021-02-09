@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block title %}Quiz View{% endblock %}
 
 {% block content %}
@@ -21,25 +21,26 @@
 				</li>
 			</ul>
 		{% endfor %}
+		<div class="container">
+			{% if new_question %}
+				<h2> Your Question has been added</h2>
+				<br></br>
+				<h2>Add New Question</h2>
+				<form method="post">
+					{{ question_form|crispy }}
+					{% csrf_token %}
+					<p><input type="submit" value="Add question"></p>
+				</form>
 
-		{% if new_question %}
-			<h2> Your Question has been added</h2>
-			<br></br>
-			<h2>Add New Question</h2>
-			<form method="post">
-				{{ question_form.as_p }}
-				{% csrf_token %}
-				<p><input type="submit" value="Add question"></p>
-			</form>
-
-		{% else %}
-			<h2>Add New Question</h2>
-			<form method="post">
-				{{ question_form.as_p }}
-				{% csrf_token %}
-				<p><input type="submit" value="Add question"></p>
-			</form>
-		{% endif %}
+			{% else %}
+				<h2>Add New Question</h2>
+				<form method="post">
+					{{ question_form|crispy }}
+					{% csrf_token %}
+					<p><input type="submit" value="Add question"></p>
+				</form>
+			{% endif %}
+		</div>
 	{% else %}
 		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
 	{% endif %}

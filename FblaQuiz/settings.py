@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'quiz.apps.QuizConfig',
     'django.contrib.postgres',
+
+    # 3rd Party Apps
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -61,7 +64,7 @@ import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,12 +85,12 @@ WSGI_APPLICATION = 'FblaQuiz.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myproject',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

@@ -10,6 +10,7 @@ psycopg2 = "*"
 weasyprint = "*"
 reportlab = "*"
 xhtml2pdf = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 
