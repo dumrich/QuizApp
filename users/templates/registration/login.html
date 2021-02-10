@@ -7,8 +7,23 @@
 	<h2>Log In</h2>
 	<form method="post">
 		{% csrf_token %}
-		{{form.as_p}}
-		<button type="submit">Log In</button>
+		{% for field in form %}
+			{% if field.label == "Email" %}
+				<div class="form-group">
+					<label for="exampleInputEmail1">Email Address:</label>
+					<input type="email" class="form-control" id="{{ filed.id_for_label }}" name="{{ field.html_name }}" aria-describedby="emailHelp" placeholder="Enter email">
+					<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+				</div>	
+				{% else %}
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password: </label>
+						<input type="password" class="form-control" id="{{ filed.id_for_label }}" name="{{ field.html_name }}" placeholder="Password">
+					</div>
+				{% endif %}
+
+		{% endfor %}
+		<button class="btn btn-primary" type="submit" value="login">Log In</button>
+		<input type="hidden" name="next" value="{{ next }}" />
 	</form>
 </div>
 {% endblock %}

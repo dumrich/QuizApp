@@ -33,6 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ('email', 'age')
+
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:

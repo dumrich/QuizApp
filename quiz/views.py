@@ -141,6 +141,7 @@ def quiz_create(request):
             new_quiz = quiz_form.save(commit=False)
             new_quiz.author = request.user
             new_quiz.save()
+            return redirect("/")
     else:
         quiz_form = QuizForm()
 

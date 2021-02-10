@@ -5,10 +5,13 @@
 {% block content %}
 	{% if user.is_authenticated %}
 		<div class="container p-4">
-			<h2>{{quiz.name}}</h2>
+			<h1>{{quiz.name}}</h1>
 			<p>{{quiz.description}}</p>
+			<p> Assigned Time: Nan</p>
+			<hr>
 			{% for question in questions %}
-				<p>{{question.question}}</p>
+				
+			<p>{{forloop.counter}}. {{question.question}}</p>
 				<form method="post">
 				{% if question.question_type == "TF" %}
 					<fieldset class="form-group">
@@ -71,7 +74,7 @@
 				{% endif %}
 			{% endfor %}
 			{% csrf_token %}
-			<p><input type="submit" value="Submit"></p>
+			<p><input type="submit" class="btn btn-primary" value="Submit"></p>
 
 				</form>
 		</div>

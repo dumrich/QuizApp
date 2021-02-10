@@ -14,31 +14,33 @@
 			</p>
 		</div>	
 
-		{% for question in questions %}
-			<ul class="list-group">
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					{{ question.question }}
-				</li>
-			</ul>
-		{% endfor %}
-		<div class="container">
-			{% if new_question %}
-				<h2> Your Question has been added</h2>
-				<br></br>
-				<h2>Add New Question</h2>
-				<form method="post">
-					{{ question_form|crispy }}
-					{% csrf_token %}
-					<p><input type="submit" value="Add question"></p>
-				</form>
+		{% if request.user == quiz.author %}
+			{% for question in questions %}
+				<ul class="list-group">
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						{{ question.question }}
+					</li>
+				</ul>
+			{% endfor %}
+			<div class="container">
+				{% if new_question %}
+					<h2> Your Question has been added</h2>
+					<br></br>
+					<h2>Add New Question</h2>
+					<form method="post">
+						{{ question_form|crispy }}
+						{% csrf_token %}
+						<p><input type="submit" value="Add question"></p>
+					</form>
 
-			{% else %}
-				<h2>Add New Question</h2>
-				<form method="post">
-					{{ question_form|crispy }}
-					{% csrf_token %}
-					<p><input type="submit" value="Add question"></p>
-				</form>
+				{% else %}
+					<h2>Add New Question</h2>
+					<form method="post">
+						{{ question_form|crispy }}
+						{% csrf_token %}
+						<p><input type="submit" value="Add question"></p>
+					</form>
+				{% endif %}
 			{% endif %}
 		</div>
 	{% else %}
