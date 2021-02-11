@@ -156,7 +156,7 @@ def quiz_delete(request, pk, slug):
     return redirect('/')
 
 def quiz_edit(request, pk, slug):
-    quiz = get_object_or_404(playId=pk, slug=slug)
+    quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     questions = quiz.questions.all()
 
     new_question = None
