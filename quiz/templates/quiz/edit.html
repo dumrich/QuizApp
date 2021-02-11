@@ -17,7 +17,7 @@
                 <br></br>
                 <h2>Add New Question</h2>
                 <form method="post">
-                    {{ question_form|crispy }}
+                    {{ question_form }}
                     {% csrf_token %}
                     <p><input type="submit" value="Add question"></p>
                 </form>
