@@ -154,7 +154,7 @@ def quiz_edit(request, pk, slug):
                 new_question.choice_4 = None
             new_question.quiz = quiz
             new_question.save()
-            return redirect(f'/{quiz.playId}/{quiz.slug}/')
+            return redirect(f'/{quiz.playId}/{quiz.slug}/edit/')
     else:
         question_form = QuestionForm()
 
