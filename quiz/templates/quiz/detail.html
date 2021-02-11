@@ -10,7 +10,7 @@
 			<h5 style="position:absolute; top:120px; left:37px;"> <b>You are the author of the quiz: </b></h5>
 				<ul class="nav nav-pills" style="position:absolute; top:110px; right:37px;">
 					<li class="nav-item">
-						<a class="nav-link active" href="#myModal">Edit</a>
+						<a class="nav-link active" href="{% url 'quiz:quiz_edit' pk=quiz.playId slug=quiz.slug %}">Edit</a>
 
 					</li>
 					<li class="nav-item">
