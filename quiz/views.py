@@ -94,29 +94,13 @@ def quiz_detail(request, pk, slug):
     View a Quiz in depth
     '''
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
+    attempts = len(SaveUserInstance.objects.filter(quiz=quiz, user=request.user))
     
-    questions = quiz.questions.all()
-
-    new_question = None
-
-    if request.method == "POST":
-        question_form = QuestionForm(data=request.POST)
-        if question_form.is_valid():
-            new_question = question_form.save(commit=False)
-            if new_question.question_type=='TF':
-                new_question.choice_3 = None
-                new_question.choice_4 = None
-            new_question.quiz = quiz
-            new_question.save()
-    else:
-        question_form = QuestionForm()
-
     return render(request, 
                   'quiz/detail.html',
                   {'quiz':quiz,
-                   'questions': questions,
-                   'new_question': new_question,
-                   'question_form': question_form})
+                   'attempts':attempts})
+
 
 def instance_detail(request, pk, slug, attempt):
     '''

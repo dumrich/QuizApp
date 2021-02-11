@@ -6,8 +6,8 @@
 <div class="container">
     {% if user.is_authenticated %}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'quiz:quiz_list' %}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{quiz.get_absolute_url}}">Library</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'quiz:quiz_list' %}">List</a></li>
+        <li class="breadcrumb-item"><a href="{{quiz.get_absolute_url}}">Detail</a></li>
         <li class="breadcrumb-item active">Edit</li>
     </ol>
         {% for question in questions %}
