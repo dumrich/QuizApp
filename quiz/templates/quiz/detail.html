@@ -45,6 +45,7 @@
 			<p class="lead">{{quiz.description}}</p>
 			<hr class="my-4">
 			<p>Created by {{quiz.author}}</p>
+			<p>Quiz id: {{quiz.playId}}</p>
 			<p class="lead">
 			<a class="btn btn-primary btn-lg" href="{% url 'quiz:quiz_take' pk=quiz.playId slug=quiz.slug %}" role="button">start</a>
 			</p>

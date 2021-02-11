@@ -155,5 +155,28 @@ def quiz_delete(request, pk, slug):
     quiz = Quiz.objects.get(playId=pk, slug=slug).delete()
     return redirect('/')
 
+def quiz_edit(request, pk, slug):
+    quiz = get_object_or_404(playId=pk, slug=slug)
+    questions = quiz.questions.all()
 
+    new_question = None
+
+    if request.method == "POST":
+        question_form = QuestionForm(data=request.POST)
+        if question_form.is_valid():
+            new_question = question_form.save(commit=False)
+            if new_question.question_type=='TF':
+                new_question.choice_3 = None
+                new_question.choice_4 = None
+            new_question.quiz = quiz
+            new_question.save()
+    else:
+        question_form = QuestionForm()
+
+    return render(request, 
+                  'quiz/edit.html',
+                  {'quiz':quiz,
+                   'questions': questions,
+                   'new_question': new_question,
+                   'question_form': question_form})
 

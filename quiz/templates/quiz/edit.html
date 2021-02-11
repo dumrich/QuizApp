@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Quiz{% endblock %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+        {% for question in questions %}
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ question.question }}
+                </li>
+            </ul>
+        {% endfor %}
+        <div class="container">
+            {% if new_question %}
+                <h2> Your Question has been added</h2>
+                <br></br>
+                <h2>Add New Question</h2>
+                <form method="post">
+                    {{ question_form|crispy }}
+                    {% csrf_token %}
+                    <p><input type="submit" value="Add question"></p>
+                </form>
+
+            {% else %}
+                <h2>Add New Question</h2>
+                <form method="post">
+                    {{ question_form|crispy }}
+                    {% csrf_token %}
+                    <p><input type="submit" value="Add question"></p>
+                </form>
+            {% endif %}
+	{% else %}
+		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
+	{% endif %}
+
+
+{% endblock %}

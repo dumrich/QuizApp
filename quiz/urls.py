@@ -35,7 +35,9 @@ urlpatterns = [
     path('pdf/<pk>', quiz_render_pdf_view, name='pdf-view'),
 
     # Delete Quiz View
-    path('<int:pk>/<slug:slug>/delete/', views.quiz_delete, name="quiz_delete")
+    path('<int:pk>/<slug:slug>/delete/', views.quiz_delete, name="quiz_delete"),
+
+    path('<int:pk>/<slug:slug>/edit/', views.quiz_edit, name="quiz_edit")
 
  
  
