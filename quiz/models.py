@@ -2,14 +2,24 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+import random
+import string
+
+
+def key_generator():
+    key = ''.join(random.choice(string.digits) for x in range(6))
+    if Quiz.objects.filter(playId=key).exists():
+        key = key_generator()
+    return key
 
 class Quiz(models.Model):
     '''
     Database model for quiz
     '''
+    playId = models.CharField(max_length=6, editable=False, default=key_generator)
     name = models.CharField(max_length=80)
     slug = models.SlugField(null=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(
                                get_user_model(),
@@ -28,7 +38,7 @@ class Quiz(models.Model):
 
     def get_absolute_url(self):
         return reverse('quiz:quiz_detail',
-                       args=[self.id,
+                       args=[self.playId,
                              self.slug])
 
 

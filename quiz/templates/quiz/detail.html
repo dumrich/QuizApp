@@ -3,46 +3,32 @@
 {% block title %}Quiz View{% endblock %}
 
 {% block content %}
+
 	{% if user.is_authenticated %}
-		<div class="jumbotron">
+	<div class="jumbotron" style=".jumbotron {position:relative;}">
+			{% if request.user == quiz.author %}
+			<h5 style="position:absolute; top:120px; left:37px;"> <b>You are the author of the quiz: </b></h5>
+				<ul class="nav nav-pills" style="position:absolute; top:110px; right:37px;">
+					<li class="nav-item">
+						<a class="nav-link active" href="#myModal">Edit</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="background-color: #b50202;" href={% url 'quiz:quiz_delete' pk=quiz.playId slug=quiz.slug %}>Delete</a>
+					</li>
+				</ul>
+				<hr>
+			{% endif %}
 			<h1 class="display-3">{{quiz.name}}</h1>
 			<p class="lead">{{quiz.description}}</p>
 			<hr class="my-4">
 			<p>Created by {{quiz.author}}</p>
 			<p class="lead">
-			<a class="btn btn-primary btn-lg" href="{% url 'quiz:quiz_take' pk=quiz.id slug=quiz.slug %}" role="button">start</a>
+			<a class="btn btn-primary btn-lg" href="{% url 'quiz:quiz_take' pk=quiz.playId slug=quiz.slug %}" role="button">start</a>
 			</p>
 		</div>	
+	</div>
 
-		{% if request.user == quiz.author %}
-			{% for question in questions %}
-				<ul class="list-group">
-					<li class="list-group-item d-flex justify-content-between align-items-center">
-						{{ question.question }}
-					</li>
-				</ul>
-			{% endfor %}
-			<div class="container">
-				{% if new_question %}
-					<h2> Your Question has been added</h2>
-					<br></br>
-					<h2>Add New Question</h2>
-					<form method="post">
-						{{ question_form|crispy }}
-						{% csrf_token %}
-						<p><input type="submit" value="Add question"></p>
-					</form>
 
-				{% else %}
-					<h2>Add New Question</h2>
-					<form method="post">
-						{{ question_form|crispy }}
-						{% csrf_token %}
-						<p><input type="submit" value="Add question"></p>
-					</form>
-				{% endif %}
-			{% endif %}
-		</div>
 	{% else %}
 		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
 	{% endif %}

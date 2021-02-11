@@ -32,7 +32,10 @@ urlpatterns = [
          name="instance_detail"),
 
     #view quiz pdf
-    path('pdf/<pk>', quiz_render_pdf_view, name='pdf-view')
+    path('pdf/<pk>', quiz_render_pdf_view, name='pdf-view'),
+
+    # Delete Quiz View
+    path('<int:pk>/<slug:slug>/delete/', views.quiz_delete, name="quiz_delete")
 
  
  

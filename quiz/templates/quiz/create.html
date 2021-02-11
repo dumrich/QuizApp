@@ -11,7 +11,7 @@
 			<form method="post">
 				{{ quiz_form.as_p }}
 				{% csrf_token %}
-				<p><input type="submit" value="Add Quiz" onclick="{% url 'quiz:quiz_list' %}"></p>
+				<p><input type="submit" class="btn btn-primary" value="Add Quiz" onclick="{% url 'quiz:quiz_list' %}"></p>
 			</form>
 		</div>
 	{% else %}

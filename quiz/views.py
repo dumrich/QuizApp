@@ -45,7 +45,7 @@ def quiz_take(request, pk, slug):
     '''
     Take a quiz
     '''
-    quiz = get_object_or_404(Quiz, slug=slug, pk=pk)
+    quiz = get_object_or_404(Quiz, slug=slug, playId=pk)
 
     questions = list(quiz.questions.all())
     print(questions) 
@@ -80,7 +80,7 @@ def quiz_take(request, pk, slug):
         UserInstance = SaveUserInstance.objects.create(user=request.user, quiz=quiz, attempt=attempts, score=score)
         UserInstance = UserInstance.UserAnswer.add(*answers)
         UserInstance = SaveUserInstance.objects.get(user = request.user, quiz=quiz, attempt=attempts, score = score)
-        return redirect(f'/{quiz.id}/{quiz.slug}/{UserInstance.attempt}')
+        return redirect(f'/{quiz.playId}/{quiz.slug}/{UserInstance.attempt}')
         
     return render(request, 
                   'quiz/quiz.html',
@@ -93,7 +93,7 @@ def quiz_detail(request, pk, slug):
     '''
     View a Quiz in depth
     '''
-    quiz = get_object_or_404(Quiz, pk=pk, slug=slug)
+    quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     
     questions = quiz.questions.all()
 
@@ -122,7 +122,7 @@ def instance_detail(request, pk, slug, attempt):
     '''
     View quiz results
     '''
-    quiz = get_object_or_404(Quiz, pk=pk, slug=slug)
+    quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     quiz_instance = get_object_or_404(SaveUserInstance, quiz=quiz, user=request.user, attempt=attempt)
     total_questions = len(quiz_instance.UserAnswer.all())
     return render(request,
@@ -149,6 +149,11 @@ def quiz_create(request):
                   'quiz/create.html',
                   {'quiz_form':quiz_form,
                    'new_quiz':new_quiz})
+
+
+def quiz_delete(request, pk, slug):
+    quiz = Quiz.objects.get(playId=pk, slug=slug).delete()
+    return redirect('/')
 
 
 
