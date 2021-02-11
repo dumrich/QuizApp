@@ -11,11 +11,14 @@
         <li class="breadcrumb-item active">Edit</li>
     </ol>
         {% for question in questions %}
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">
-                    {{ question.question }}
-                </a>
+            <hr width="100%">
+            <div class="alert alert-dismissible alert-primary">
+                <strong>This is a preview question.</strong> The answer will not be shown in the quiz.
             </div>
+            <p>Question: {{question.question}}</p>
+            <p>Answer: {{question.answer}}</p>
+            <p>Question Type: {{question.question_type}}</p>
+            <hr width="100%">
         {% endfor %}
         <div class="container">
             {% if new_question %}
