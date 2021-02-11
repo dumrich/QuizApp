@@ -5,11 +5,11 @@
 {% block content %}
 	{% if user.is_authenticated %}
         {% for question in questions %}
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">
                     {{ question.question }}
-                </li>
-            </ul>
+                </a>
+            </div>
         {% endfor %}
         <div class="container">
             {% if new_question %}
