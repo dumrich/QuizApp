@@ -6,7 +6,9 @@ import random
 import string
 
 
+
 def key_generator():
+    '''Generate random playId for Quiz'''
     key = ''.join(random.choice(string.digits) for x in range(6))
     if Quiz.objects.filter(playId=key).exists():
         key = key_generator()
