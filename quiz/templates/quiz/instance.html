@@ -18,7 +18,6 @@
 	{% for UserAnswer in quiz_instance.UserAnswer.all %}
 		{% if UserAnswer.question.answer != UserAnswer.answer %}
 			<div class="alert alert-dismissible alert-danger">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong>Oh snap!</strong> <a href="#" class="alert-link">Wrong Answer</a>
 			</div>
 		{% else %}

@@ -9,7 +9,7 @@ urlpatterns = [
     # quiz views
 
     #list all quizzes
-    path('', views.QuizListView.as_view(), name='quiz_list'),
+    path('', views.QuizListView, name='quiz_list'),
 
     #view quiz in depth
     path('<int:pk>/<slug:slug>/',
@@ -37,8 +37,7 @@ urlpatterns = [
     # Delete Quiz View
     path('<int:pk>/<slug:slug>/delete/', views.quiz_delete, name="quiz_delete"),
 
-    path('<int:pk>/<slug:slug>/edit/', views.quiz_edit, name="quiz_edit")
+    path('<int:pk>/<slug:slug>/edit/', views.quiz_edit, name="quiz_edit"),
 
- 
  
 ]

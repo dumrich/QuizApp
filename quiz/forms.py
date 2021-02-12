@@ -30,6 +30,13 @@ class QuestionForm(forms.ModelForm):
     '''
     Forms for creating a question
     '''
+    question = forms.CharField(widget=forms.TextInput(
+        attrs = {
+            'class': 'form-control',
+            'placeholder': 'Enter question'
+            }
+        ))        
+
     class Meta:
         model=Question
         exclude = ['quiz']

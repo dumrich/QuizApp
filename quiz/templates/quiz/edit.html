@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load quiz_tags %}
 
 {% block title %}Edit Quiz{% endblock %}
 
@@ -11,14 +12,15 @@
         <li class="breadcrumb-item active">Edit</li>
     </ol>
         <h2>Question Preview</h2>
+				<hr width="100%">
         {% for question in questions %}
-            <hr width="100%">
             <div class="alert alert-dismissible alert-primary">
                 <strong>This is a preview question.</strong> The answer will not be shown in the quiz.
             </div>
             <p>Question: {{question.question}}</p>
             <p>Answer: {{question.answer}}</p>
             <p>Question Type: {{question.question_type}}</p>
+						<p>Delete Question: Delete</p>
             <hr width="100%">
         {% endfor %}
         <div class="container">
@@ -35,9 +37,13 @@
             {% else %}
                 <h2>Add New Question</h2>
                 <form method="post">
-                    {{ question_form }}
+                    {{ question_form.errors }}
+										{% for field in question_form %}
+											<p>{{field.label_tag}}</p>
+											<p>{{field|cssadd:"form-control"}}</p>
+										{% endfor %}
                     {% csrf_token %}
-                    <p><input type="submit" value="Add question"></p>
+                    <p><input class="btn btn-primary" type="submit" value="Add question"></p>
                 </form>
             {% endif %}
 	{% else %}

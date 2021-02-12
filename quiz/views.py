@@ -7,6 +7,12 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
+
+def handle_form(request):
+    query = int(request.POST["playId"])
+    quiz = get_object_or_404(Quiz, playId=query) 
+    return redirect(f'/{quiz.playId}/{quiz.slug}')
+
 def quiz_render_pdf_view(request, *args, **kwargs):
     '''
     render a pdf
@@ -32,14 +38,15 @@ def quiz_render_pdf_view(request, *args, **kwargs):
     return response
 
 
-class QuizListView(ListView):
+def QuizListView(request):
     '''
     List all quizzes
     '''
     queryset = Quiz.objects.all()
-    context_object_name = 'quizzes'
-    template_name = 'quiz/list.html'
-
+    if request.method=="POST":
+        return handle_form(request)  
+    return render(request, 'quiz/list.html', {'quizzes':queryset})
+    
 
 def quiz_take(request, pk, slug):
     '''
@@ -47,6 +54,8 @@ def quiz_take(request, pk, slug):
     '''
     quiz = get_object_or_404(Quiz, slug=slug, playId=pk)
 
+    if request.method=="POST":
+        return handle_form(request)  
     questions = list(quiz.questions.all())
     print(questions) 
 
@@ -96,6 +105,8 @@ def quiz_detail(request, pk, slug):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     attempts = len(SaveUserInstance.objects.filter(quiz=quiz, user=request.user))
     
+    if request.method=="POST":
+        return handle_form(request)  
     return render(request, 
                   'quiz/detail.html',
                   {'quiz':quiz,
@@ -109,6 +120,8 @@ def instance_detail(request, pk, slug, attempt):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     quiz_instance = get_object_or_404(SaveUserInstance, quiz=quiz, user=request.user, attempt=attempt)
     total_questions = len(quiz_instance.UserAnswer.all())
+    if request.method=="POST":
+        return handle_form(request)  
     return render(request,
                   'quiz/instance.html',
                   {'quiz_instance': quiz_instance,
@@ -118,6 +131,8 @@ def quiz_create(request):
     '''
     Quiz results
     '''
+    if request.method=="POST":
+        return handle_form(request)  
     new_quiz = None
     if request.method == 'POST':
         quiz_form = QuizForm(data=request.POST)
@@ -143,6 +158,8 @@ def quiz_edit(request, pk, slug):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     questions = quiz.questions.all()
 
+    if request.method=="POST":
+        return handle_form(request)  
     new_question = None
 
     if request.method == "POST":
