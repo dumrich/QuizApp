@@ -43,8 +43,12 @@ def QuizListView(request):
     List all quizzes
     '''
     queryset = Quiz.objects.all()
-    if request.method=="POST":
-        return handle_form(request)  
+    if request.method == "POST":
+        try:
+            if request._post['playId']:
+                return handle_form(request)
+        except:
+            pass
     return render(request, 'quiz/list.html', {'quizzes':queryset})
     
 
@@ -54,8 +58,12 @@ def quiz_take(request, pk, slug):
     '''
     quiz = get_object_or_404(Quiz, slug=slug, playId=pk)
 
-    if request.method=="POST":
-        return handle_form(request)  
+    if request.method == "POST":
+        try:
+            if request._post['playId']:
+                return handle_form(request)
+        except:
+            pass
     questions = list(quiz.questions.all())
     print(questions) 
 
@@ -105,8 +113,12 @@ def quiz_detail(request, pk, slug):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     attempts = len(SaveUserInstance.objects.filter(quiz=quiz, user=request.user))
     
-    if request.method=="POST":
-        return handle_form(request)  
+    if request.method == "POST":
+        try:
+            if request._post['playId']:
+                return handle_form(request)
+        except:
+            pass
     return render(request, 
                   'quiz/detail.html',
                   {'quiz':quiz,
@@ -120,8 +132,12 @@ def instance_detail(request, pk, slug, attempt):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     quiz_instance = get_object_or_404(SaveUserInstance, quiz=quiz, user=request.user, attempt=attempt)
     total_questions = len(quiz_instance.UserAnswer.all())
-    if request.method=="POST":
-        return handle_form(request)  
+    if request.method == "POST":
+        try:
+            if request._post['playId']:
+                return handle_form(request)
+        except:
+            pass
     return render(request,
                   'quiz/instance.html',
                   {'quiz_instance': quiz_instance,
@@ -131,8 +147,12 @@ def quiz_create(request):
     '''
     Quiz results
     '''
-    if request.method=="POST":
-        return handle_form(request)  
+    if request.method == "POST":
+        try:
+            if request._post['playId']:
+                return handle_form(request)
+        except:
+            pass
     new_quiz = None
     if request.method == 'POST':
         quiz_form = QuizForm(data=request.POST)
@@ -151,17 +171,27 @@ def quiz_create(request):
 
 
 def quiz_delete(request, pk, slug):
-    quiz = Quiz.objects.get(playId=pk, slug=slug).delete()
+    Quiz.objects.get(playId=pk, slug=slug).delete()
     return redirect('/')
 
 def quiz_edit(request, pk, slug):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     questions = quiz.questions.all()
 
-    if request.method=="POST":
-        return handle_form(request)  
+    if request.method == "POST":
+        try:
+            if request._post['playId']:
+                return handle_form(request)
+        except:
+            pass
     new_question = None
-
+    if request.method=="POST":
+        try:
+            if request._post["delete"]:
+                quiz.questions.get(id=request._post["delete"][0]).delete()
+                return redirect('')
+        except:
+            pass
     if request.method == "POST":
         question_form = QuestionForm(data=request.POST)
         if question_form.is_valid():

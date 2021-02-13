@@ -20,7 +20,10 @@
             <p>Question: {{question.question}}</p>
             <p>Answer: {{question.answer}}</p>
             <p>Question Type: {{question.question_type}}</p>
-						<p>Delete Question: Delete</p>
+						<form method="POST">
+							<p><button type="submit" value="{{question.id}}" style="background-color:#b50202" id="delete" name="delete" class="btn btn-primary">Delete</button></p>
+							{% csrf_token %}
+						</form>
             <hr width="100%">
         {% endfor %}
         <div class="container">
@@ -37,7 +40,6 @@
             {% else %}
                 <h2>Add New Question</h2>
                 <form method="post">
-                    {{ question_form.errors }}
 										{% for field in question_form %}
 											<p>{{field.label_tag}}</p>
 											<p>{{field|cssadd:"form-control"}}</p>

@@ -9,7 +9,7 @@ import string
 
 def key_generator():
     '''Generate random playId for Quiz'''
-    key = ''.join(random.choice(string.digits) for x in range(6))
+    key = '1'+''.join(random.choice(string.digits) for x in range(6))
     if Quiz.objects.filter(playId=key).exists():
         key = key_generator()
     return key
@@ -18,7 +18,7 @@ class Quiz(models.Model):
     '''
     Database model for quiz
     '''
-    playId = models.CharField(max_length=6, editable=False, default=key_generator)
+    playId = models.CharField(max_length=7, editable=False, default=key_generator)
     name = models.CharField(max_length=80)
     slug = models.SlugField(null=True)
     description = models.TextField(blank=True, null=True)
