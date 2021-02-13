@@ -36,7 +36,8 @@ class QuestionForm(forms.ModelForm):
             'placeholder': 'Enter question'
             }
         ))        
-
+    choice_3 = forms.CharField(required=False)
+    choice_4 = forms.CharField(required=False)
     class Meta:
         model=Question
         exclude = ['quiz']

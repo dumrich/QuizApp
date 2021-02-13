@@ -20,10 +20,10 @@
             <p>Question: {{question.question}}</p>
             <p>Answer: {{question.answer}}</p>
             <p>Question Type: {{question.question_type}}</p>
-						<form method="POST">
-							<p><button type="submit" value="{{question.id}}" style="background-color:#b50202" id="delete" name="delete" class="btn btn-primary">Delete</button></p>
-							{% csrf_token %}
-						</form>
+            <form method="POST">
+                <p><button type="submit" value="{{question.id}}" style="background-color:#b50202" id="delete" name="delete" class="btn btn-primary">Delete</button></p>
+                {% csrf_token %}
+            </form>
             <hr width="100%">
         {% endfor %}
         <div class="container">

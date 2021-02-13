@@ -3,10 +3,10 @@ from django.views.generic import ListView
 from .models import Quiz, SaveUserInstance, UserAnswer
 from .forms import QuizForm, QuestionForm
 from random import shuffle
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
+from itertools import combinations
 
 def handle_form(request):
     query = int(request.POST["playId"])
@@ -64,15 +64,15 @@ def quiz_take(request, pk, slug):
                 return handle_form(request)
         except:
             pass
+            
     questions = list(quiz.questions.all())
-    print(questions) 
 
     shuffle(questions)
-    print(questions)
+    shuffle(question_order)
+    question_order = question_order[:3]
+    print(question_order)
     questions = questions[:5]
     
-    
-
     if request.method == 'POST':
         questions= list(dict(request.POST).items())[:-1]
         answers = []
@@ -188,8 +188,8 @@ def quiz_edit(request, pk, slug):
     if request.method=="POST":
         try:
             if request._post["delete"]:
-                quiz.questions.get(id=request._post["delete"][0]).delete()
-                return redirect('')
+                question = quiz.questions.get(id=int(request._post["delete"])).delete()
+                return HttpResponseRedirect(request.path_info)
         except:
             pass
     if request.method == "POST":
