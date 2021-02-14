@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-
+{% load quiz_tags %}
 {% block title %}{{ quiz.name  }} {% endblock %}
 
 {% block content %}
 	{% if user.is_authenticated %}
 		<div class="container p-4">
 			<h1>{{quiz.name}}</h1>
-			<p>{{quiz.description}}</p>
-			<p> Assigned Time: Nan</p>
-			<hr>
+				<p>{{quiz.description}}</p>
+				<p> Assigned Time: Nan</p>
+				<hr>
 			{% for question in questions %}
 				
 			<p>{{forloop.counter}}. {{question.question}}</p>
@@ -29,42 +29,25 @@
 						</div>
 					</fieldset>
 				{% elif question.question_type == "D"%}
-					<div class="form-group">
-						<label for="{{question}}{{forloop.counter}}"></label>
-						<select class="form-control" required="required" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
-							<option value="{{question.choice_2}}">{{question.choice_2}}</option>
-							<option value="{{question.answer}}">{{question.answer}}</option>
-							<option value="{{question.choice_3}}">{{question.choice_3}}</option>
-							<option value="{{question.choice_4}}">{{question.choice_4}}</option>
-						</select>
-					</div>
+						<div class="form-group">
+							<label for="{{question}}{{forloop.counter}}"></label>
+							<select class="form-control" required="required" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
+							{% for k, p in question_order_dict|get_item:question|turn_zip %}
+								<option value="{{p}}">{{p}}</option>
+							{% endfor %}
+							</select>
+						</div>
 				{% elif question.question_type == "MC" %}
 						<fieldset class="form-group">
+						{% for k, p in question_order_dict|get_item:question|turn_zip %}
 						<div class="form-check">
 							<label class="form-check-label">
-								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.answer}}" >
-								{{question.answer}}
+								<input type="radio" class="form-check-input" name="{{question}}" id="{{question}}{{forloop.counter}}" value="{{p}}" >
+								{{p}}
 							</label>
 						</div>
-						<div class="form-check">
-							<label class="form-check-label">
-								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_2}}">
-									{{question.choice_2}}	
-							</label>
-						</div>
-							<div class="form-check">
-							<label class="form-check-label">
-								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_3}}">
-									{{question.choice_3}}	
-							</label>
-						</div>
-							<div class="form-check">
-							<label class="form-check-label">
-								<input required type="radio" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="{{question.choice_3}}">
-									{{question.choice_3}}	
-							</label>
-						</div>
-
+						{% endfor %}
+	
 					</fieldset>
 				{% elif question.question_type == "T"%}
 					<div class="form-group">

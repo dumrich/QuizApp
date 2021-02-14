@@ -6,7 +6,6 @@ import random
 import string
 
 
-
 def key_generator():
     '''Generate random playId for Quiz'''
     key = '1'+''.join(random.choice(string.digits) for x in range(6))

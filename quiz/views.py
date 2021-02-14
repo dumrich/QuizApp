@@ -7,6 +7,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from itertools import combinations
+from collections import defaultdict
+
 
 def handle_form(request):
     query = int(request.POST["playId"])
@@ -66,12 +68,21 @@ def quiz_take(request, pk, slug):
             pass
             
     questions = list(quiz.questions.all())
-
     shuffle(questions)
-    shuffle(question_order)
-    question_order = question_order[:3]
-    print(question_order)
+    question_order_dict = defaultdict(dict)
+    for question in questions:
+        if question.question_type=="MC" or question.question_type=="D":
+            question_order_dict[question] = {question.answer:question.answer, question.choice_2:question.choice_2, question.choice_3:question.choice_3, question.choice_4:question.choice_4}
+            question_order_list = list(question_order_dict[question].items())
+            shuffle(question_order_list)
+            question_order_dict[question] = dict(question_order_list)
+    print(dict(question_order_dict))
     questions = questions[:5]
+
+    context_dict = {'quiz':quiz,
+                'questions': questions,
+                'question_order_dict':question_order_dict,
+                }
     
     if request.method == 'POST':
         questions= list(dict(request.POST).items())[:-1]
@@ -101,9 +112,8 @@ def quiz_take(request, pk, slug):
         
     return render(request, 
                   'quiz/quiz.html',
-                  {'quiz':quiz,
-                   'questions': questions
-                  })
+                  context_dict
+                  )
 
 
 def quiz_detail(request, pk, slug):
@@ -188,7 +198,7 @@ def quiz_edit(request, pk, slug):
     if request.method=="POST":
         try:
             if request._post["delete"]:
-                question = quiz.questions.get(id=int(request._post["delete"])).delete()
+                quiz.questions.get(id=int(request._post["delete"])).delete()
                 return HttpResponseRedirect(request.path_info)
         except:
             pass

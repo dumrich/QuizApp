@@ -26,7 +26,6 @@
             </form>
             <hr width="100%">
         {% endfor %}
-        <div class="container">
             {% if new_question %}
                 <h2> Your Question has been added</h2>
                 <br></br>
@@ -40,14 +39,28 @@
             {% else %}
                 <h2>Add New Question</h2>
                 <form method="post">
-										{% for field in question_form %}
-											<p>{{field.label_tag}}</p>
-											<p>{{field|cssadd:"form-control"}}</p>
-										{% endfor %}
+                    {% for field in question_form %}
+                        <p>{{field.label_tag}}</p>
+                        <p>{{field|cssadd:"form-control"}}</p>
+                    {% endfor %}
                     {% csrf_token %}
                     <p><input class="btn btn-primary" type="submit" value="Add question"></p>
                 </form>
             {% endif %}
+            <h2> Or, upload a file: </h2>
+            <div class="form-group">
+                <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile02">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <span class="input-group-text">Upload</span>
+                </div>
+                </div>
+            </div>
+
+
 	{% else %}
 		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
     {% endif %}
