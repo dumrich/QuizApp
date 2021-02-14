@@ -10,6 +10,7 @@ from itertools import combinations
 from collections import defaultdict
 
 
+
 def handle_form(request):
     query = int(request.POST["playId"])
     quiz = get_object_or_404(Quiz, playId=query) 
@@ -53,7 +54,6 @@ def QuizListView(request):
             pass
     return render(request, 'quiz/list.html', {'quizzes':queryset})
     
-
 def quiz_take(request, pk, slug):
     '''
     Take a quiz
@@ -188,21 +188,13 @@ def quiz_edit(request, pk, slug):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     questions = quiz.questions.all()
 
-    if request.method == "POST":
-        try:
-            if request._post['playId']:
-                return handle_form(request)
-        except:
-            pass
     new_question = None
-    if request.method=="POST":
-        try:
-            if request._post["delete"]:
-                quiz.questions.get(id=int(request._post["delete"])).delete()
-                return HttpResponseRedirect(request.path_info)
-        except:
-            pass
     if request.method == "POST":
+        if request._post.get("delete", 0):
+            quiz.questions.get(id=int(request._post["delete"])).delete()
+            return HttpResponseRedirect(request.path_info)
+        if request._post.get('playId', 0):
+            return handle_form(request)
         question_form = QuestionForm(data=request.POST)
         if question_form.is_valid():
             new_question = question_form.save(commit=False)
@@ -214,6 +206,7 @@ def quiz_edit(request, pk, slug):
             return redirect(f'/{quiz.playId}/{quiz.slug}/edit/')
     else:
         question_form = QuestionForm()
+
 
     return render(request, 
                   'quiz/edit.html',
