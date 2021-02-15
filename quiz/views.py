@@ -11,8 +11,8 @@ import ast
 
 def turn_to_model(file, quiz, request):
     file = ast.literal_eval(file.read().decode('latin'))
-    for i in range(len(file.keys())):
-        question = file["Q"+str(i+1)]
+    for i in range(1, len(file.keys())+1):
+        question = file["Q"+str(i)]
         question_question = question.get("question")
         question_question_type = question.get("question_type")
         question_answer = question.get("answer")
@@ -87,7 +87,6 @@ def quiz_take(request, pk, slug):
             question_order_list = list(question_order_dict[question].items())
             shuffle(question_order_list)
             question_order_dict[question] = dict(question_order_list)
-    print(dict(question_order_dict))
     questions = questions[:5]
 
     context_dict = {'quiz':quiz,
@@ -103,7 +102,6 @@ def quiz_take(request, pk, slug):
              answer = UserAnswer.objects.create(user=request.user, quiz=quiz, question=quiz.questions.get(question=stripped_question),
                      answer=question[1][0])
              answers.append(answer)
-        print(answers)
         if SaveUserInstance.objects.filter(user=request.user, quiz=quiz):
             attempts = list(SaveUserInstance.objects.filter(user=request.user, quiz=quiz))[-1].attempt + 1
         else:
@@ -115,7 +113,6 @@ def quiz_take(request, pk, slug):
                 score = score + 1
             else:
                 continue       
-        print(score)
         UserInstance = SaveUserInstance.objects.create(user=request.user, quiz=quiz, attempt=attempts, score=score)
         UserInstance = UserInstance.UserAnswer.add(*answers)
         UserInstance = SaveUserInstance.objects.get(user = request.user, quiz=quiz, attempt=attempts, score = score)
@@ -201,7 +198,7 @@ def quiz_edit(request, pk, slug):
     new_question = None
     if request.method == "POST":
         if file:=request.FILES.get('file', 0):
-            print(turn_to_model(file, quiz, request))
+            return turn_to_model(file, quiz, request)
         if request._post.get("delete", 0):
             quiz.questions.get(id=int(request._post["delete"])).delete()
             return HttpResponseRedirect(request.path_info)
