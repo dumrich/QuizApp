@@ -41,6 +41,3 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model=Question
         exclude = ['quiz']
-
-class UploadFileForm(forms.Form):
-    file = forms.FileField()

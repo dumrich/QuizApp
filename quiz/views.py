@@ -1,16 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView
 from .models import Quiz, SaveUserInstance, UserAnswer
-from .forms import QuizForm, QuestionForm
+from .forms import QuizForm, QuestionForm 
 from random import shuffle
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from itertools import combinations
 from collections import defaultdict
+import json
 
-
-
+def turn_to_model(file):
+    file = json.loads(file.read())
+    return file
+    
 def handle_form(request):
     query = int(request.POST["playId"])
     quiz = get_object_or_404(Quiz, playId=query) 
@@ -187,9 +189,10 @@ def quiz_delete(request, pk, slug):
 def quiz_edit(request, pk, slug):
     quiz = get_object_or_404(Quiz, playId=pk, slug=slug)
     questions = quiz.questions.all()
-
     new_question = None
     if request.method == "POST":
+        if file:=request.FILES.get('file', 0):
+            print(turn_to_model(file))
         if request._post.get("delete", 0):
             quiz.questions.get(id=int(request._post["delete"])).delete()
             return HttpResponseRedirect(request.path_info)
@@ -213,5 +216,6 @@ def quiz_edit(request, pk, slug):
                   {'quiz':quiz,
                    'questions': questions,
                    'new_question': new_question,
-                   'question_form': question_form})
+                   'question_form': question_form,
+                   })
 

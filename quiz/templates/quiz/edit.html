@@ -49,17 +49,21 @@
             {% endif %}
             <hr width=100%/>
             <h2> Or, upload a file: </h2>
-            <div class="form-group">
-                <div class="input-group mb-3">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile02">
-                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                 <div class="form-group">
+                    <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" name="file" id="file" class="custom-file-input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+
+                        <p><input class="btn btn-primary" type="submit" value="Upload file"></p>
+                    </div>
+                    </div>
                 </div>
-                <div class="input-group-append">
-                    <span class="input-group-text">Upload</span>
-                </div>
-                </div>
-            </div>
+            </form>
 
 
 	{% else %}
