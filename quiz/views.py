@@ -7,11 +7,20 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from itertools import combinations
 from collections import defaultdict
-import json
+import ast
 
-def turn_to_model(file):
-    file = json.loads(file.read())
-    return file
+def turn_to_model(file, quiz, request):
+    file = ast.literal_eval(file.read().decode('latin'))
+    for i in range(len(file.keys())):
+        question = file["Q"+str(i+1)]
+        question_question = question.get("question")
+        question_question_type = question.get("question_type")
+        question_answer = question.get("answer")
+        question_choice_2 = question.get("choice_2")
+        question_choice_3 = question.get("choice_3", "n/a")
+        question_choice_4 = question.get("choice_4", "n/a")
+        quiz.questions.create(question=question_question, question_type=question_question_type, answer=question_answer, choice_2=question_choice_2, choice_3=question_choice_3, choice_4=question_choice_4) 
+    return redirect(request.path_info)
     
 def handle_form(request):
     query = int(request.POST["playId"])
@@ -192,7 +201,7 @@ def quiz_edit(request, pk, slug):
     new_question = None
     if request.method == "POST":
         if file:=request.FILES.get('file', 0):
-            print(turn_to_model(file))
+            print(turn_to_model(file, quiz, request))
         if request._post.get("delete", 0):
             quiz.questions.get(id=int(request._post["delete"])).delete()
             return HttpResponseRedirect(request.path_info)
