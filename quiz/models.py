@@ -13,24 +13,26 @@ def key_generator():
         key = key_generator()
     return key
 
+
 class Quiz(models.Model):
     '''
     Database model for quiz
     '''
-    playId = models.CharField(max_length=7, editable=False, default=key_generator)
+    playId = models.CharField(
+        max_length=7, editable=False, default=key_generator)
     name = models.CharField(max_length=80)
     slug = models.SlugField(null=True)
     description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(
-                               get_user_model(),
-                               on_delete=models.CASCADE,
-            )
+        get_user_model(),
+        on_delete=models.CASCADE,
+    )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Quiz, self).save(*args, **kwargs)
-  
+
     def __str__(self):
         return f'{self.name}'
 
@@ -48,11 +50,11 @@ class Question(models.Model):
     Database Table for question
     '''
     TYPE_CHOICES = (
-            ('MC', 'Multiple Choice'),
-            ('TF', 'True False'),
-            ('T', 'Type Answer'),
-            ('D', 'Dropdown'),
-            )
+        ('MC', 'Multiple Choice'),
+        ('TF', 'True False'),
+        ('T', 'Type Answer'),
+        ('D', 'Dropdown'),
+    )
     question = models.CharField(max_length=254)
     question_type = models.CharField(max_length=10,
                                      choices=TYPE_CHOICES)
@@ -65,11 +67,11 @@ class Question(models.Model):
     choice_2 = models.CharField(max_length=250, null=True)
     choice_3 = models.CharField(max_length=254, null=True)
     choice_4 = models.CharField(max_length=255, null=True)
-    
+
     def __str__(self):
         return self.question
-    
- 
+
+
 class UserAnswer(models.Model):
     '''
     Database table for User Answer
@@ -100,12 +102,10 @@ class SaveUserInstance(models.Model):
     quiz = models.ForeignKey(Quiz,
                              on_delete=models.CASCADE)
     attempt = models.IntegerField(default=0)
-    
+
     UserAnswer = models.ManyToManyField(UserAnswer,
                                         related_name='answers')
-    score = models.PositiveIntegerField(null=True, blank=True)   
-
- 
+    score = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.user.email

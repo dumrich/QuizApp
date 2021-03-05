@@ -11,6 +11,7 @@ weasyprint = "*"
 reportlab = "*"
 xhtml2pdf = "*"
 django-crispy-forms = "*"
+djangorestframework = "==3.11.0"
 
 [dev-packages]
 pylint = "*"

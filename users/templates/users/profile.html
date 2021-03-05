@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+<div class="container p-4">
+	<h2>User Profile</h2>
+	{% for quiz, average in quizzes %}
+		<div class="card bg-secondary mb-3" style="max-width: 20rem;">
+			<div class="card-header">{{ quiz }}</div>
+			<div class="card-body">
+				<h4 class="card-title">{{ average }}/5</h4>
+				<p class="card-text">{{ quiz.description }}</p>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+{% endblock content %}

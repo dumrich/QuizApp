@@ -7,37 +7,39 @@ class QuizForm(forms.ModelForm):
     Forms for creating a quiz
     '''
     name = forms.CharField(widget=forms.TextInput(
-        attrs = {
+        attrs={
             'class': 'form-control',
-            'placeholder':'Enter Name'
-            }
-        ))
+            'placeholder': 'Enter Name'
+        }
+    ))
     description = forms.CharField(widget=forms.Textarea(
-        attrs = {
+        attrs={
 
             'class': 'form-control',
-            'id':"exampleTextarea",
+            'id': "exampleTextarea",
 
-            }
+        }
 
-        ), required=False)
+    ), required=False)
 
     class Meta:
-        model=Quiz
+        model = Quiz
         fields = ('name', 'description')
+
 
 class QuestionForm(forms.ModelForm):
     '''
     Forms for creating a question
     '''
     question = forms.CharField(widget=forms.TextInput(
-        attrs = {
+        attrs={
             'class': 'form-control',
             'placeholder': 'Enter question'
-            }
-        ))        
+        }
+    ))
     choice_3 = forms.CharField(required=False)
     choice_4 = forms.CharField(required=False)
+
     class Meta:
-        model=Question
+        model = Question
         exclude = ['quiz']

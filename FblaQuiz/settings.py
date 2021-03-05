@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'quiz.apps.QuizConfig',
     'django.contrib.postgres',
+    'api',
 
     # 3rd Party Apps
-    'crispy_forms'
+    'crispy_forms',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,12 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORk = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsorAnonReadOnly'
+    ]
+}
 
 WSGI_APPLICATION = 'FblaQuiz.wsgi.application'
 
@@ -135,5 +143,6 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = "/users/login"
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
