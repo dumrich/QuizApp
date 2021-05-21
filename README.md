@@ -28,5 +28,12 @@ When you go to `localhost:8000`, you will be redirected to a login page. You can
 ## Extending the website with advanced functionality
 The logic behind the site is stored in the `quiz/views.py` file. Manipulating that will allow you to change: Question randomness, Database querying, login requirements, PDF fields, Login form submissions, and much more. You can add custom database fields by manipulating the Django ORM in the `models.py` file. After any changes, run: `docker-compose run web python manage.py makemigrations` and `docker-compose run web python manage.py migrate`.
 
+## Todo
+- [] Add WASM to Web App
+- [] Fix presentation
+- [] Add Rust modules
+- [] Add API with Django Rest Framework
+- [] Add Rust CLI that uses Reqwest
+
 ## Contributors
-This project was created solely by Abhinav Chavali, MIT license
+This project was created solely by Abhinav Chavali, GNU/GPL license
