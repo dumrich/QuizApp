@@ -20,6 +20,9 @@ class CustomUserManager(BaseUserManager):
         user.is_superuser = True
         user.save()
 
+        return user
+
+
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(max_length=256, unique=True)

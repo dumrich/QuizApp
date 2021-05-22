@@ -24,3 +24,51 @@ class CustomUserTests(TestCase):
         )
         self.assertEqual(user.email, "test@gmail.com")
         self.assertTrue(user.is_superuser)
+
+    def test_update_user(self):
+        '''Test Updating Superuser'''
+        User = get_user_model()
+        user = User.objects.create_user(
+            email="test@gmail.com",
+            age=14,
+            password="testpass123"
+        )
+        user.email = "test123@yahoo.com"
+        user.save()
+        self.assertEqual(user.email, "test123@yahoo.com")
+
+    def test_update_superuser(self):
+        '''Test updating a superuser'''
+        User = get_user_model()
+        user = User.objects.create_superuser(
+            email="test@gmail.com",
+            age=14,
+            password="testpass123"
+        )
+        user.email = "test123@yahoo.com"
+        user.save()
+        self.assertEqual(user.email, "test123@yahoo.com")
+
+    def test_delete_user(self):
+        '''Test deleting user'''
+        User = get_user_model()
+        user = User.objects.create_user(
+            email="test@gmail.com",
+            age=14,
+            password="testpass123"
+        )
+        user.save()
+        User.objects.get(email="test@gmail.com").delete()
+        self.assertFalse(User.objects.filter(email="test@gmail.com").exists())
+
+    def test_delete_superuser(self):
+        '''Test updating a superuser'''
+        User = get_user_model()
+        user = User.objects.create_superuser(
+            email="test@gmail.com",
+            age=14,
+            password="testpass123"
+        )
+        user.save()
+        User.objects.get(email="test@gmail.com").delete()
+        self.assertFalse(User.objects.filter(email="test@gmail.com").exists())
