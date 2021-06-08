@@ -1,0 +1,21 @@
+[package]
+name = "FblaQuiz-gui"
+version = "0.1.0"
+authors = ["Abhinav Chavali <abhinavchavali12@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.11.3", features = ["json"] }
+tokio = { version = "1.5.0", features = ["full"] }
+serde_json = "*"
+
+[dependencies.gtk]
+version = "0.9.0"
+features = ["v3_16"]
+
+[dependencies.gio]
+version = ""
+features = ["v2_44"]
+
