@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load quiz_tags %}
+{% block title %}{{ quiz.name  }} {% endblock %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<div class="container p-4">
+			<h1>{{quiz.name}}</h1>
+				<p>{{quiz.description}}</p>
+				<p> Assigned Time: Nan</p>
+				<hr>
+			{% for question in questions %}
+				
+			<p>{{forloop.counter}}. {{question.question}}</p>
+				<form method="post">
+				{% if question.question_type == "TF" %}
+					<fieldset class="form-group">
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" required="required" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="True" >
+								True
+							</label>
+						</div>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" required="required" class="form-check-input" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}" value="False">
+								False
+							</label>
+						</div>
+					</fieldset>
+				{% elif question.question_type == "D"%}
+						<div class="form-group">
+							<label for="{{question}}{{forloop.counter}}"></label>
+							<select class="form-control" required="required" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
+							{% for k, p in question_order_dict|get_item:question|turn_zip %}
+								<option value="{{p}}">{{p}}</option>
+							{% endfor %}
+							</select>
+						</div>
+				{% elif question.question_type == "MC" %}
+						<fieldset class="form-group">
+						{% for k, p in question_order_dict|get_item:question|turn_zip %}
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="{{question}}" id="{{question}}{{forloop.counter}}" value="{{p}}" >
+								{{p}}
+							</label>
+						</div>
+						{% endfor %}
+	
+					</fieldset>
+				{% elif question.question_type == "T"%}
+					<div class="form-group">
+						<input required="required" type="text" class="form-control" placeholder="Enter Answer" name="{{question}}/count/{{forloop.counter}}" id="{{question}}{{forloop.counter}}">
+					</div>
+						
+				{% endif %}
+			{% endfor %}
+			{% csrf_token %}
+			<p><input type="submit" class="btn btn-primary" value="Submit"></p>
+
+				</form>
+		</div>
+		</div>
+	{% else %}
+		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
+	{% endif %}
+
+
+{% endblock %}

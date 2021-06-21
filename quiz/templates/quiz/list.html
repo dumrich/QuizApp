@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz List{% endblock %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<div class="container pt-4">
+			<h1>
+				Quiz List
+			</h1>
+			<hr>
+			<div class="row">
+
+				{% for quiz in quizzes %}
+					<div class="col-xs-6 col-sm-4 col-md-4 mb-4 mt-3">
+						<a style="color:grey" href="{{quiz.get_absolute_url}}">
+							<div class="card h-100 w-100 border-secondary mb-3" style="max-width: 20rem;">
+								<div class="card-header">By {{quiz.author.email}}</div>
+								<div class="card-body">
+									<h4 class="card-title">{{ quiz.name }}</h4>
+
+									<p class="card-text">{{quiz.description}}</p>
+									<p class="card-text">Join ID: {{quiz.playId}}</p>
+								</div>
+							</div>
+						</a>
+					</div>
+
+				{% endfor %}
+			</div>
+		</div>
+	{% else %}
+		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
+	{% endif %}
+
+
+{% endblock %}

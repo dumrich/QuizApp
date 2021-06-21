@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+pynvim = "*"
+psycopg2-binary = "*"
+weasyprint = "*"
+reportlab = "*"
+xhtml2pdf = "*"
+django-crispy-forms = "*"
+djangorestframework = "==3.11.0"
+dj-rest-auth = "==1.1.0"
+django-allauth = "~=0.42.0"
+django-rest-auth = "*"
+django-cors-headers = "*"
+
+[dev-packages]
+pylint = "*"
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true

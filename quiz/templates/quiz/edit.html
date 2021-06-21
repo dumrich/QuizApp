@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load quiz_tags %}
+
+{% block title %}Edit Quiz{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'quiz:quiz_list' %}">List</a></li>
+        <li class="breadcrumb-item"><a href="{{quiz.get_absolute_url}}">Detail</a></li>
+        <li class="breadcrumb-item active">Edit</li>
+    </ol>
+        <h2>Question Preview</h2>
+				<hr width="100%">
+        {% for question in questions %}
+            <div class="alert alert-dismissible alert-primary">
+                <strong>This is a preview question.</strong> The answer will not be shown in the quiz.
+            </div>
+            <p>Question: {{question.question}}</p>
+            <p>Answer: {{question.answer}}</p>
+            <p>Question Type: {{question.question_type}}</p>
+            <form method="POST">
+                <p><button type="submit" value="{{question.id}}" style="background-color:#b50202" id="delete" name="delete" class="btn btn-primary">Delete</button></p>
+                {% csrf_token %}
+            </form>
+            <hr width="100%">
+        {% endfor %}
+            {% if new_question %}
+                <h2> Your Question has been added</h2>
+                <br></br>
+                <h2>Add New Question</h2>
+                <form method="post">
+                    {{ question_form }}
+                    {% csrf_token %}
+                    <p><input type="submit" value="Add question"></p>
+                </form>
+
+            {% else %}
+                <h2>Add New Question</h2>
+                <form method="post">
+                    {% for field in question_form %}
+                        <p>{{field.label_tag}}</p>
+                        <p>{{field|cssadd:"form-control"}}</p>
+                    {% endfor %}
+                    {% csrf_token %}
+                    <p><input class="btn btn-primary" type="submit" value="Add question"></p>
+                </form>
+            {% endif %}
+            <hr width=100%/>
+            <h2> Or, upload a file: </h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                 <div class="form-group">
+                    <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" name="file" id="file" class="custom-file-input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+
+                        <p><input class="btn btn-primary" type="submit" value="Upload file"></p>
+                    </div>
+                    </div>
+                </div>
+            </form>
+
+
+	{% else %}
+		<a class="nav-link" href="{% url 'login' %}"><h2>Please login here</h2></a>
+    {% endif %}
+    </div>
+
+
+{% endblock %}

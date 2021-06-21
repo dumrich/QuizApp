@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+	<title>{% block title %}{% endblock %}</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.css">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="/">Fbla Quiz</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor03">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+			{% if request.user.is_authenticated %}
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'quiz:quiz_create' %}">Create</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'users:profile' %}">Profile</a>
+				</li>
+			{% endif %}
+			{% if not request.user.is_authenticated %}
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'login' %}">Login</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'users:signup' %}">Register</a>
+				</li>
+			{% endif %}
+			{% if request.user.is_authenticated %}
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'logout' %}">Logout</a>
+				</li>
+			{% endif %}
+
+         </ul>
+    <form method="post" class="form-inline my-2 my-lg-0">
+      <input name="playId" id="playId" class="form-control mr-sm-2" type="number" placeholder="Enter a Quiz ID">
+			{% csrf_token %}
+			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+</head>
+
+<body>
+  <script src="js/scripts.js"></script>
+	<div id="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>
+</html>

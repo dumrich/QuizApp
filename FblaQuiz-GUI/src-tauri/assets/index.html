@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="bootstrap.css">
+        <link rel="stylesheet" href="styles.css">
+        <title>
+            FblaQuiz GUI
+        </title>
+    </head>
+    <body>
+        <script>
+
+		function make_user_request() {
+		  var email = document.getElementById("UserEmail").value;
+		  var password = document.getElementById("UserPassword").value;
+		  console.log(email);
+		  console.log(password);
+		  var dataToSend = JSON.stringify({"username": "", "email": email, "password": password});
+		  var dataRecieved = "";
+		  var url = "http://localhost:8000/api/rest-auth/login/";
+		
+		   fetch("https://google.com/", {method: 'get'}).then(console.log);
+		  fetch(url, { method: 'POST', body: dataToSend, headers: {'Content-Type': 'application/json'} })
+		  .then(
+		    function(response) {
+		      if (response.status !== 200) {
+			console.log('Looks like there was a problem. Status Code: ' +
+			  response.status);
+			return;
+		      }
+
+		      // Examine the text in the response
+		      response.json().then(function(data) {
+			console.log(data);
+			localStorage.setItem('key', JSON.stringify(data));
+
+			window.location.href = "join.html";
+		      });
+		    }
+		  )
+		  .catch(function(err) {
+		    console.log('Fetch Error :-S', err);
+		  });
+		}
+
+	</script>
+        <div class="d-grid container vertical-center"> 
+	    <div class="col-lg-6 offset-lg-3 align-middle margin-top-5 align-items-center justify-content-center">
+		<form>
+                <div class="row">
+                    <fieldset>
+                        <legend>
+                            Log in
+                        </legend>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
+                          <input type="email" class="form-control" id="UserEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
+                        <input type="password" class="form-control" id="UserPassword" placeholder="Password">
+                        </div>
+                    </fieldset>
+
+                </div>
+
+            </form>
+
+		<input onclick="make_user_request()" type="submit" class="btn btn-primary mt-2 w-100" id="submit_button"></input>
+        </div>
+	</div>
+
+        <button type="button" class="btn btn-link justify-content-end"><a href="signup.html">Or sign up instead</a></button>
+    </body>
+</html>

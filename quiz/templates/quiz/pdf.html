@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+		<title>Quiz PDF</title>
+	<body>
+		<h1>Quiz {{myvar}}</h1>
+		<div class="container p-4">
+		<h2>"{{quiz_instance.quiz}}" results for {{quiz_instance.user}}</h2>
+	</div>
+	<div class="container p-2">
+		<h5>Total Score: {{quiz_instance.score}}!</h6>	
+		<hr width="100%">
+
+
+	</div>
+	<div class="container pl-4">
+
+	{% for UserAnswer in quiz_instance.UserAnswer.all %}
+		{% if UserAnswer.question.answer != UserAnswer.answer %}
+			<div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Oh snap!</strong> <a href="#" class="alert-link">Wrong Answer</a>
+			</div>
+		{% else %}
+			<div class="alert alert-dismissible alert-success">
+				<strong>Well done!</strong> You got the  <a href="#" class="alert-link">correct answer</a>.
+			</div>
+		{% endif %}
+		<p>Question: {{UserAnswer.question}}</p>
+		<p>Your Answer: {{UserAnswer.answer}}</p>
+		<p>Answer: {{UserAnswer.question.answer}}</p>
+		<hr width="100%">
+	{% endfor %}
+	</div>
+	
+
+
+</html>
